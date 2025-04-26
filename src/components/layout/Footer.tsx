@@ -1,4 +1,5 @@
 import { Tally5 } from "lucide-react";
+import { Link } from "react-router";
 
 function Footer() {
   return (
@@ -43,9 +44,9 @@ function Footer() {
             >
               Portfolio
             </a>
-            <a href="/privacy" className="hover:underline">
+            <Link to="/privacy" className="hover:underline">
               Privacy
-            </a>
+            </Link>
           </div>
         </nav>
       </footer>

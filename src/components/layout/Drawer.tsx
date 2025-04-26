@@ -1,11 +1,14 @@
 import { ReactNode } from "react";
 import { X as XIcon } from "lucide-react";
+import { DrawerItem } from "../../types/types";
+import { Link } from "react-router";
 
 interface DrawerProps {
   children: ReactNode;
+  items: DrawerItem[];
 }
 
-function Drawer({ children }: DrawerProps) {
+function Drawer({ children, items }: DrawerProps) {
   return (
     <div className="drawer drawer-end">
       <input type="checkbox" className="drawer-toggle" id="user-menu" />
@@ -26,12 +29,15 @@ function Drawer({ children }: DrawerProps) {
               <XIcon />
             </label>
           </li>
-          <li>
-            <a>Sidebar Item 1</a>
-          </li>
-          <li>
-            <a>Sidebar Item 2</a>
-          </li>
+          {items.map((item, idx) => (
+            <li key={idx}>
+              {item.href ? (
+                <Link to={item.href}>{item.label}</Link>
+              ) : (
+                <button onClick={item.onClick}>{item.label}</button>
+              )}
+            </li>
+          ))}
         </ul>
       </div>
     </div>

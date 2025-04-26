@@ -1,4 +1,5 @@
 import { CircleUserRound, Tally5 } from "lucide-react";
+import { Link } from "react-router";
 
 function Navbar() {
   return (
@@ -6,9 +7,12 @@ function Navbar() {
       <div className="navbar mx-auto max-w-5xl">
         <div className="flex flex-1 items-center">
           <Tally5 />
-          <a className="btn btn-ghost text-xl tracking-wide uppercase">
+          <Link
+            to="/"
+            className="btn btn-ghost text-xl tracking-wide uppercase"
+          >
             Countsy
-          </a>
+          </Link>
         </div>
         <div className="mr-4 flex-none">
           <label
