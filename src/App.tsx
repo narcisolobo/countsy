@@ -10,6 +10,7 @@ import LandingPage from "./pages/LandingPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import SignInPage from "./pages/SignInPage";
 import type { DrawerItem } from "./types/types";
+import EditCounterPage from "./pages/EditCounterPage";
 
 function App() {
   const { isSignedIn, isLoading } = useAuth();
@@ -36,6 +37,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/sign-in" element={<SignInPage />} />
           <Route path="/counters" element={<CountersPage />} />
+          <Route path="/counters/:id/edit" element={<EditCounterPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
         </Routes>
         <Footer />

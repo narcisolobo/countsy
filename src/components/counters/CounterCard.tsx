@@ -1,8 +1,10 @@
 import { useRef, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { Link } from "react-router";
 import { supabase } from "../../lib/supabase-client";
 import type { Counter } from "../../types/counter";
+import { Archive, Minus, PencilLine, Plus } from "lucide-react";
 
 interface CounterCardProps {
   counter: Counter;
@@ -76,7 +78,8 @@ function CounterCard({ counter }: CounterCardProps) {
 
   return (
     <div className="card bg-base-100 border-base-200 border shadow-md">
-      <div className="card-body p-4">
+      {/* card header */}
+      <div className="border-base-content/10 flex justify-center border-b px-4 py-2">
         {isEditing ? (
           <input
             ref={inputRef}
@@ -101,42 +104,66 @@ function CounterCard({ counter }: CounterCardProps) {
             autoFocus
           />
         ) : (
-          <h3
-            className="cursor-pointer text-xl font-semibold"
-            onClick={() => setIsEditing(true)}
-          >
-            {counter.title}
-          </h3>
+          <div className="tooltip" data-tip="Edit title">
+            <h3
+              className="card-title cursor-pointer"
+              onClick={() => setIsEditing(true)}
+            >
+              {counter.title}
+            </h3>
+          </div>
         )}
+      </div>
 
-        <p className="text-base-content/70">
-          Current value: <span className="font-medium">{counter.value}</span>
-        </p>
-
-        {counter.goal !== null && (
-          <p className="text-base-content/50 text-sm">Goal: {counter.goal}</p>
-        )}
-
-        <div className="mt-4 flex gap-2">
-          <button
-            className="btn btn-sm btn-outline"
-            onClick={() =>
-              updateCounter.mutate({ newValue: (counter.value ?? 0) - 1 })
-            }
-            disabled={updateCounter.isPending}
-          >
-            -
-          </button>
-
-          <button
-            className="btn btn-sm btn-outline"
-            onClick={() =>
-              updateCounter.mutate({ newValue: (counter.value ?? 0) + 1 })
-            }
-            disabled={updateCounter.isPending}
-          >
-            +
-          </button>
+      <div className="flex gap-2">
+        <div className="border-base-content/10 flex-2 border-r p-4">
+          {/* counter value */}
+          <p className="text-base-content/70">
+            <span className="text-8xl">{counter.value}</span>
+          </p>
+          {/* decrement/increment buttons */}
+          <div className="mt-4 flex justify-center gap-4">
+            <div className="tooltip" data-tip="decrease">
+              <button
+                className="btn btn-circle btn-ghost"
+                onClick={() =>
+                  updateCounter.mutate({ newValue: (counter.value ?? 0) - 1 })
+                }
+                disabled={updateCounter.isPending}
+              >
+                <Minus />
+              </button>
+            </div>
+            <div className="tooltip" data-tip="increase">
+              <button
+                className="btn btn-circle btn-ghost"
+                onClick={() =>
+                  updateCounter.mutate({ newValue: (counter.value ?? 0) + 1 })
+                }
+                disabled={updateCounter.isPending}
+              >
+                <Plus />
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="flex h-full flex-1 flex-col justify-center p-4">
+          <p className="text-base-content/70">
+            Goal: {counter.goal !== null ? counter.goal : `n/a`}
+          </p>
+          <div className="tooltip" data-tip="edit counter">
+            <Link
+              to={`/counters/${counter.id}/edit`}
+              className="btn btn-circle btn-ghost text-base-content/70 hover:text-base-content"
+            >
+              <PencilLine size={28} />
+            </Link>
+          </div>
+          <div className="tooltip" data-tip="archive counter">
+            <button className="btn btn-circle btn-ghost text-base-content/70 hover:text-base-content">
+              <Archive size={28} />
+            </button>
+          </div>
         </div>
       </div>
     </div>

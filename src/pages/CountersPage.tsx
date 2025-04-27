@@ -78,8 +78,8 @@ function CountersPage() {
   }
 
   return (
-    <section id="counters">
-      <div className="mx-auto flex min-h-[70vh] max-w-5xl flex-col items-center justify-center p-4 text-center">
+    <section id="counters" className="bg-base-200">
+      <div className="mx-auto min-h-[70vh] max-w-5xl px-4 text-center">
         <h1 className="mb-6 text-3xl font-bold">Your Counters</h1>
 
         {counters?.length === 0 ? (
@@ -100,7 +100,7 @@ function CountersPage() {
               You have {counters.length} counter{counters.length > 1 ? "s" : ""}
               .
             </p>
-            <div className="grid gap-4">
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
               {counters.map((counter) => (
                 <CounterCard key={counter.id} counter={counter} />
               ))}
