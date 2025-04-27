@@ -1,6 +1,6 @@
 # Countsy
 
-## Track anything. Count everything.
+_Track anything. Count everything._
 
 Countsy is a lightweight web app that lets you create and manage custom counters for anything you want — habits, projects, inventory, goals, and more.
 
