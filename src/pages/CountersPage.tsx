@@ -1,9 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import CounterCard from "../components/counters/CounterCard";
+import LoadingSpinner from "../components/ui/LoadingSpinner";
 import { useAuth } from "../hooks/useAuth";
 import { supabase } from "../lib/supabase-client";
 import type { Counter, NewCounter } from "../types/counter";
-import CounterCard from "../components/counters/CounterCard";
 
 const COUNTERS_QUERY_KEY = ["counters"];
 
@@ -53,26 +54,14 @@ function CountersPage() {
     },
   });
 
-  if (authLoading || isPending) {
-    return (
-      <div className="flex min-h-[70vh] items-center justify-center">
-        <span className="loading loading-spinner loading-lg text-primary"></span>
-      </div>
-    );
+  if (authLoading || isPending || !counters) {
+    return <LoadingSpinner />;
   }
 
   if (isError) {
     return (
       <div className="text-error p-4 text-center">
         Something went wrong while loading your counters.
-      </div>
-    );
-  }
-
-  if (!counters) {
-    return (
-      <div className="p-4 text-center">
-        <span className="loading loading-spinner" />
       </div>
     );
   }

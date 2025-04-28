@@ -1,10 +1,11 @@
-import { useRef, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Archive, Minus, PencilLine, Plus } from "lucide-react";
+import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router";
 import { supabase } from "../../lib/supabase-client";
 import type { Counter } from "../../types/counter";
-import { Archive, Minus, PencilLine, Plus } from "lucide-react";
+import ArchiveModal from "../ui/ArchiveModal";
 
 interface CounterCardProps {
   counter: Counter;
@@ -17,6 +18,12 @@ function CounterCard({ counter }: CounterCardProps) {
   const [draftTitle, setDraftTitle] = useState(counter.title);
   const inputRef = useRef<HTMLInputElement>(null);
   const queryClient = useQueryClient();
+
+  const showArchiveModal = () => {
+    const modalId = `archive-modal-${counter.id}`;
+    const modalElement = document.getElementById(modalId) as HTMLDialogElement;
+    modalElement.showModal();
+  };
 
   const titleMutation = useMutation({
     mutationFn: async (newTitle: string) => {
@@ -160,12 +167,17 @@ function CounterCard({ counter }: CounterCardProps) {
             </Link>
           </div>
           <div className="tooltip" data-tip="archive counter">
-            <button className="btn btn-circle btn-ghost text-base-content/70 hover:text-base-content">
+            <button
+              aria-label="Archive counter"
+              onClick={() => showArchiveModal()}
+              className="btn btn-circle btn-ghost text-base-content/70 hover:text-base-content"
+            >
               <Archive size={28} />
             </button>
           </div>
         </div>
       </div>
+      <ArchiveModal counter={counter} />
     </div>
   );
 }

@@ -1,14 +1,16 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Archive, ArrowBigLeftDash, Loader2, Save } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import counterSchema from "../lib/schemas/counter-schema";
+import toast from "react-hot-toast";
 import { Link, useNavigate, useParams } from "react-router";
+import FormInput from "../components/ui/FormInput";
+import counterSchema, {
+  CounterFormValues,
+} from "../lib/schemas/counter-schema";
 import { supabase } from "../lib/supabase-client";
 import type { Counter } from "../types/counter";
-import { CounterFormValues } from "../lib/schemas/counter-schema";
-import FormInput from "../components/ui/FormInput";
 
 function EditCounterPage() {
   const { id } = useParams();
@@ -67,10 +69,11 @@ function EditCounterPage() {
 
     if (!error) {
       await queryClient.invalidateQueries({ queryKey: ["counters"] });
+      toast.success("Changes saved!");
       navigate("/counters");
     } else {
       console.error(error.message);
-      // You could show a toast error here if you want
+      toast.error("Something went wrong...");
     }
   };
 
