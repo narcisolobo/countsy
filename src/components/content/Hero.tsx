@@ -10,7 +10,7 @@ function Hero() {
           else.
         </p>
         <Link to="/sign-in" className="btn btn-primary mt-4">
-          Get Started
+          Start Counting
         </Link>
       </div>
     </section>
