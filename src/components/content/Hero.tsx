@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 function Hero() {
   return (
     <section id="hero">
@@ -7,7 +9,9 @@ function Hero() {
           Create and manage custom counters for habits, projects, or anything
           else.
         </p>
-        <button className="btn btn-primary mt-4">Get Started</button>
+        <Link to="/sign-in" className="btn btn-primary mt-4">
+          Get Started
+        </Link>
       </div>
     </section>
   );
