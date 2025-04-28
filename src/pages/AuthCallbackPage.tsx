@@ -15,6 +15,8 @@ function AuthCallbackPage() {
       const accessToken = params.get("access_token");
       const refreshToken = params.get("refresh_token");
 
+      console.log({ hash, params, accessToken, refreshToken });
+
       if (!accessToken || !refreshToken) {
         toast.error("Invalid or expired sign-in link. Please try again.");
         navigate("/sign-in");
