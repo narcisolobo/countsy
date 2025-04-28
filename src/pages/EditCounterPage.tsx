@@ -2,9 +2,13 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Archive, ArrowBigLeftDash, Loader2, Save } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import counterSchema from "../lib/schemas/counter-schema";
 import { Link, useNavigate, useParams } from "react-router";
 import { supabase } from "../lib/supabase-client";
 import type { Counter } from "../types/counter";
+import { CounterFormValues } from "../lib/schemas/counter-schema";
+import FormInput from "../components/ui/FormInput";
 
 function EditCounterPage() {
   const { id } = useParams();
@@ -24,7 +28,13 @@ function EditCounterPage() {
   const counter = counters?.find((c) => c.id === id);
 
   // Form
-  const { control, handleSubmit, reset } = useForm<Counter>({
+  const {
+    formState: { errors, isSubmitting },
+    handleSubmit,
+    register,
+    reset,
+  } = useForm<CounterFormValues>({
+    resolver: zodResolver(counterSchema),
     defaultValues: {
       title: "",
       goal: undefined,
@@ -43,7 +53,7 @@ function EditCounterPage() {
     }
   }, [counter, reset]);
 
-  const onSubmit = async (data: Counter) => {
+  const onSubmit = async (data: CounterFormValues) => {
     if (!id) return;
 
     const { error } = await supabase
@@ -88,42 +98,32 @@ function EditCounterPage() {
         onSubmit={handleSubmit(onSubmit)}
         className="bg-base-200 mx-auto flex max-w-2xl flex-col gap-4 rounded-lg p-6 shadow-md"
       >
-        <div className="form-control">
-          <label className="label" htmlFor="title">
-            <span className="label-text">Title:</span>
-          </label>
-          <input
-            id="title"
-            type="text"
-            {...control.register("title")}
-            className="input input-bordered w-full"
-          />
-        </div>
-
-        <div className="form-control">
-          <label className="label" htmlFor="value">
-            <span className="label-text">Starting count:</span>
-          </label>
-          <input
-            id="value"
-            type="number"
-            {...control.register("value", { valueAsNumber: true })}
-            className="input input-bordered w-full"
-          />
-        </div>
-
-        <div className="form-control">
-          <label className="label" htmlFor="goal">
-            <span className="label-text">Goal (optional):</span>
-          </label>
-          <input
-            id="goal"
-            type="number"
-            {...control.register("goal", { valueAsNumber: true })}
-            className="input input-bordered w-full"
-          />
-        </div>
-
+        <FormInput
+          type="text"
+          placeholder="Enter title"
+          name="title"
+          label="title"
+          register={register}
+          error={errors.title}
+        />
+        <FormInput
+          type="number"
+          placeholder="Enter starting value"
+          name="value"
+          label="starting value"
+          register={register}
+          error={errors.value}
+          valueAsNumber
+        />
+        <FormInput
+          type="number"
+          placeholder="Enter goal (optional)"
+          name="goal"
+          label="goal"
+          register={register}
+          error={errors.goal}
+          valueAsNumber
+        />
         <div className="mt-4 flex justify-end gap-2">
           <div className="tooltip" data-tip="Back">
             <Link
@@ -139,8 +139,16 @@ function EditCounterPage() {
             </button>
           </div>
           <div className="tooltip" data-tip="Save changes">
-            <button className="btn btn-primary" type="submit">
-              <Save />
+            <button
+              className="btn btn-primary"
+              type="submit"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <span className="loading loading-spinner loading-sm"></span>
+              ) : (
+                <Save />
+              )}
             </button>
           </div>
         </div>

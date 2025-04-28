@@ -100,7 +100,7 @@ function CountersPage() {
               You have {counters.length} counter{counters.length > 1 ? "s" : ""}
               .
             </p>
-            <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(340px,1fr))] gap-4">
               {counters.map((counter) => (
                 <CounterCard key={counter.id} counter={counter} />
               ))}

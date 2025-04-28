@@ -1,4 +1,3 @@
-import { Tally5 } from "lucide-react";
 import { Link } from "react-router";
 
 function Footer() {
@@ -6,7 +5,6 @@ function Footer() {
     <section id="footer" className="bg-base-200">
       <footer className="footer footer-horizontal footer-center text-base-content mx-auto max-w-5xl p-10">
         <aside>
-          <Tally5 size={48} className="text-primary-content" />
           <p className="font-bold">
             Countsy
             <br />
