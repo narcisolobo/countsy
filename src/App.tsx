@@ -5,12 +5,13 @@ import Footer from "./components/layout/Footer";
 import Navbar from "./components/layout/Navbar";
 import { useAuth } from "./hooks/useAuth";
 import { handleSignOut } from "./lib/auth";
+import AuthCallbackPage from "./pages/AuthCallbackPage";
 import CountersPage from "./pages/CountersPage";
+import EditCounterPage from "./pages/EditCounterPage";
 import LandingPage from "./pages/LandingPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import SignInPage from "./pages/SignInPage";
 import type { DrawerItem } from "./types/types";
-import EditCounterPage from "./pages/EditCounterPage";
 
 function App() {
   const { isSignedIn, isLoading } = useAuth();
@@ -35,6 +36,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/auth/callback" element={<AuthCallbackPage />} />
           <Route path="/sign-in" element={<SignInPage />} />
           <Route path="/counters" element={<CountersPage />} />
           <Route path="/counters/:id/edit" element={<EditCounterPage />} />
