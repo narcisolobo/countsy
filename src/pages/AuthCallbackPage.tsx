@@ -10,20 +10,25 @@ function AuthCallbackPage() {
 
   useEffect(() => {
     async function handleAuthRedirect() {
-      const url = new URL(window.location.href);
-      const code = url.searchParams.get("code");
+      const hash = window.location.hash;
+      const params = new URLSearchParams(hash.substring(1)); // Remove the '#' and parse
+      const accessToken = params.get("access_token");
+      const refreshToken = params.get("refresh_token");
 
-      if (!code) {
-        toast.error("Missing authorization code. Please try signing in again.");
+      if (!accessToken || !refreshToken) {
+        toast.error("Invalid or expired sign-in link. Please try again.");
         navigate("/sign-in");
         return;
       }
 
-      const { error } = await supabase.auth.exchangeCodeForSession(code);
+      const { error } = await supabase.auth.setSession({
+        access_token: accessToken,
+        refresh_token: refreshToken,
+      });
 
       if (error) {
         console.error("Auth error:", error.message);
-        toast.error("Sign-in link expired or invalid. Please try again.");
+        toast.error("Sign-in failed. Please try again.");
         navigate("/sign-in");
       } else {
         toast.success("Signed in successfully!");
@@ -36,16 +41,16 @@ function AuthCallbackPage() {
     handleAuthRedirect();
   }, [navigate]);
 
-  return (
-    <section className="flex min-h-[70vh] flex-col items-center justify-center p-4 text-center">
-      {loading ? (
-        <>
-          <Loader2 className="h-8 w-8 animate-spin" />
-          <h2 className="mt-4 text-2xl font-bold">Signing you in...</h2>
-        </>
-      ) : null}
-    </section>
-  );
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
+        <span className="ml-2">Signing you in...</span>
+      </div>
+    );
+  }
+
+  return null;
 }
 
 export default AuthCallbackPage;
