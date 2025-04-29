@@ -42,8 +42,10 @@ function AuthProvider({ children }: AuthProviderProps) {
         case "SIGNED_IN":
           setUser(session?.user ?? null);
           setIsLoading(false);
-          toast.success("Signed in successfully!");
-          navigate("/counters", { replace: true });
+          if (location.pathname === "/sign-in") {
+            navigate("/counters", { replace: true });
+            toast.success("Signed in successfully!");
+          }
           break;
 
         case "SIGNED_OUT":
