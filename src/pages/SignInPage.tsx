@@ -27,6 +27,19 @@ function SignInPage() {
     }
   }
 
+  async function handleSignInWithGoogle() {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
+    });
+
+    if (error) {
+      console.error("Google sign-in error:", error.message);
+    }
+  }
+
   return (
     <div className="bg-base-200 flex min-h-[70vh] items-center justify-center p-4">
       <div className="card bg-base-100 w-full max-w-sm shadow-lg">
