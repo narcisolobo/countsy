@@ -3,41 +3,50 @@ function PrivacyPage() {
     <div className="mx-auto min-h-[70vh] max-w-5xl p-4 py-10">
       <h1 className="mb-4 text-3xl font-bold">Privacy Policy</h1>
       <p className="text-base-content/80 mb-4">
-        At <strong>Countsy</strong>, we value your privacy. This page outlines
-        how we handle your data.
+        At <strong>Countsy</strong>, we value your privacy. This Privacy Policy
+        explains how we collect, use, and safeguard your information when you
+        use our services.
       </p>
 
       <h2 className="mt-6 mb-2 text-xl font-semibold">What We Collect</h2>
       <p className="text-base-content/70 mb-4">
-        We store your counters and user authentication details securely through
-        Supabase. We do not collect or store any personal information beyond
-        what is required for login and usage.
+        We store only the data necessary to provide our service. This includes:
       </p>
+      <ul className="text-base-content/70 ml-8 list-disc">
+        <li>Your authentication credentials (via Supabase)</li>
+        <li>Your saved counters and related metadata</li>
+      </ul>
 
       <h2 className="mt-6 mb-2 text-xl font-semibold">How Your Data Is Used</h2>
       <p className="text-base-content/70 mb-4">
-        Your data is used only to display and manage your counters. We do not
-        sell, share, or otherwise distribute your information.
+        Your data is used solely to deliver the features of the app, such as
+        creating, editing, and viewing your counters. We do not sell, rent, or
+        share your data with third parties.
       </p>
 
       <h2 className="mt-6 mb-2 text-xl font-semibold">Third-Party Services</h2>
       <p className="text-base-content/70 mb-4">
-        Authentication and database services are provided by{" "}
+        We use{" "}
         <a href="https://supabase.com" className="link">
-          Supabase
-        </a>
-        , which adheres to its own security and privacy practices.
+          <strong>Supabase</strong>
+        </a>{" "}
+        to provide authentication and database services. Supabase adheres to its
+        own privacy and security policies, which we encourage you to review.
       </p>
 
       <h2 className="mt-6 mb-2 text-xl font-semibold">Your Rights</h2>
       <p className="text-base-content/70 mb-4">
-        You can request to delete your account and associated data at any time
-        by contacting the developer.
+        You may request deletion of your account and associated data at any
+        time. Please contact the developer to initiate this request.
       </p>
 
-      <p className="text-base-content/60 mt-6 text-sm">
-        This privacy policy is subject to change. Last updated:{" "}
-        {new Date().toLocaleDateString()}
+      <p className="text-base-content/70 mb-4">
+        This Privacy Policy is subject to change. We will update this page to
+        reflect any updates.
+      </p>
+
+      <p className="text-base-content/70 mb-4">
+        <em>Last updated: April 29, 2025</em>
       </p>
     </div>
   );
