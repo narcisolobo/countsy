@@ -14,7 +14,7 @@ function SignInPage() {
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback`, // or wherever you want to send them
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
       },
     });
 

@@ -1,6 +1,14 @@
-import { useEffect, useState, createContext, useContext } from "react";
-import { supabase } from "../lib/supabase-client";
 import type { User } from "@supabase/supabase-js";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router";
+import { supabase } from "../lib/supabase-client";
 
 interface AuthContextValue {
   user: User | null;
@@ -8,34 +16,58 @@ interface AuthContextValue {
   isLoading: boolean;
 }
 
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const getInitialSession = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log("[Auth Event]:", event, session);
 
-      setUser(session?.user ?? null);
-      setIsLoading(false);
-    };
+      switch (event) {
+        case "INITIAL_SESSION":
+          setUser(session?.user ?? null);
+          setIsLoading(false);
+          break;
 
-    getInitialSession();
+        case "SIGNED_IN":
+          setUser(session?.user ?? null);
+          setIsLoading(false);
+          toast.success("Signed in successfully!");
+          navigate("/counters", { replace: true });
+          break;
 
-    const { data: listener } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        setUser(session?.user ?? null);
-      },
-    );
+        case "SIGNED_OUT":
+          setUser(null);
+          setIsLoading(false);
+          toast.success("Signed out successfully.");
+          navigate("/sign-in", { replace: true });
+          break;
+
+        case "TOKEN_REFRESHED":
+        case "USER_UPDATED":
+          setUser(session?.user ?? null);
+          break;
+
+        default:
+          console.warn("Unhandled auth event:", event);
+          break;
+      }
+    });
 
     return () => {
-      listener.subscription.unsubscribe();
+      subscription?.unsubscribe();
     };
-  }, []);
+  }, [navigate]);
 
   const value = {
     user,
@@ -46,10 +78,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-export function useAuth() {
+function useAuth() {
   const context = useContext(AuthContext);
   if (!context) {
     throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 }
+
+export { useAuth };
+export default AuthProvider;
