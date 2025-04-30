@@ -18,7 +18,7 @@ function Footer() {
         <nav>
           <div className="grid grid-flow-col gap-4">
             <a
-              href="https://github.com/yourusername/countsy"
+              href="https://github.com/narcisolobo/countsy"
               aria-label="GitHub"
               target="_blank"
               rel="noopener noreferrer"
