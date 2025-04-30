@@ -17,7 +17,6 @@ function EditCounterPage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  // Get all counters (or you could query one if you want to optimize later)
   const { data: counters, isLoading } = useQuery<Counter[]>({
     queryKey: ["counters"],
     queryFn: async () => {
@@ -26,10 +25,8 @@ function EditCounterPage() {
     },
   });
 
-  // Find the specific counter
   const counter = counters?.find((c) => c.id === id);
 
-  // Form
   const {
     formState: { errors, isSubmitting },
     handleSubmit,
@@ -44,7 +41,6 @@ function EditCounterPage() {
     },
   });
 
-  // When counter loads, reset form
   useEffect(() => {
     if (counter) {
       reset({
