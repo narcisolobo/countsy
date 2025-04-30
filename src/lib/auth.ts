@@ -8,7 +8,6 @@ export async function handleSignOut(navigate: (path: string) => void) {
     toast.error("Oops! Logout failed.");
     console.error("Logout error:", error.message);
   } else {
-    toast.success("Signed out successfully.");
     navigate("/sign-in");
   }
 }
