@@ -6,6 +6,7 @@ function TechStack() {
         <div className="text-sm md:text-base">
           <p className="text-base-content/60 mt-8">
             <a
+              target="_blank"
               href="https://react.dev/"
               className="link-primary hover:underline"
             >
@@ -13,6 +14,7 @@ function TechStack() {
             </a>
             ,{" "}
             <a
+              target="_blank"
               href="https://daisyui.com/"
               className="link-primary hover:underline"
             >
@@ -20,6 +22,7 @@ function TechStack() {
             </a>
             ,{" "}
             <a
+              target="_blank"
               href="https://supabase.com/"
               className="link-primary hover:underline"
             >
@@ -27,6 +30,7 @@ function TechStack() {
             </a>
             , and{" "}
             <a
+              target="_blank"
               href="https://lucide.dev/"
               className="link-primary hover:underline"
             >
@@ -37,6 +41,7 @@ function TechStack() {
           <p className="text-base-content/60 mt-2">
             Designed and developed by{" "}
             <a
+              target="_blank"
               href="https://www.cisocodes.com/"
               className="link-primary hover:underline"
             >

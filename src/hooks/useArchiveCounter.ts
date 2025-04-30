@@ -1,4 +1,3 @@
-// src/hooks/useArchiveCounter.ts
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "../lib/supabase-client";
 import toast from "react-hot-toast";

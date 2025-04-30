@@ -13,6 +13,7 @@ import PrivacyPage from "./pages/PrivacyPage";
 import SignInPage from "./pages/SignInPage";
 import type { DrawerItem } from "./types/types";
 import TermsPage from "./pages/TermsPage";
+import ProtectedRoute from "./guards/ProtectedRoute";
 
 function App() {
   const { isSignedIn, isLoading } = useAuth();
@@ -39,8 +40,22 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/auth/callback" element={<AuthCallbackPage />} />
           <Route path="/sign-in" element={<SignInPage />} />
-          <Route path="/counters" element={<CountersPage />} />
-          <Route path="/counters/:id/edit" element={<EditCounterPage />} />
+          <Route
+            path="/counters"
+            element={
+              <ProtectedRoute>
+                <CountersPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/counters/:id/edit"
+            element={
+              <ProtectedRoute>
+                <EditCounterPage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />
         </Routes>
