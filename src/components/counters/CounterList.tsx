@@ -28,7 +28,7 @@ function CounterList({ filteredCounters }: CounterListProps) {
 
   return (
     <Fragment>
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(340px,1fr))] gap-4">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-4">
         {filteredCounters &&
           filteredCounters.map((counter) => (
             <CounterCard key={counter.id} counter={counter} />
